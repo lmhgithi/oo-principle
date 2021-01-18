@@ -3,7 +3,7 @@ package cc.oobootcamp.principle.dip;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class PlaintPrinter implements Printer{
+public class XMLPrinter implements Printer{
     private static final Logger LOGGER = Logger.getLogger(OrderReceiptHandler.class.getName());
 
     public void print(List<Item> items, double totalPrice) {
