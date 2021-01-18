@@ -1,15 +1,30 @@
 package cc.oobootcamp.principle.lsp;
 
-public class Square extends Rectangle {
-    @Override
-    public void setHeight(double height) {
-        this.height = height;
-        this.width = height;
-    }
+public class Square implements Quadrilateral {
+  private double side;
 
-    @Override
-    public void setWidth(double width) {
-        this.height = width;
-        this.width = width;
-    }
+  public double getSide() {
+    return side;
+  }
+
+  public void setSide(double side) {
+    this.side = side;
+  }
+
+  @Override
+  public double calculateArea() {
+    return side * side;
+  }
+
+  @Override
+  public double getWidth() {
+    return side;
+  }
+
+  @Override
+  public double getHeight() {
+    return side;
+  }
+
+
 }
