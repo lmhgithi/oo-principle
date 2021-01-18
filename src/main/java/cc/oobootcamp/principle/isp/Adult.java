@@ -3,12 +3,12 @@ package cc.oobootcamp.principle.isp;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Baby implements HumanAble, BabyAble {
+public class Adult implements HumanAble, AdultAble {
     private Map<String, Long> records = new HashMap<>();
 
     @Override
-    public void crawl() {
-        increase("CRAWL");
+    public void work() {
+        increase("WORK");
     }
 
     @Override
@@ -22,8 +22,8 @@ public class Baby implements HumanAble, BabyAble {
     }
 
     @Override
-    public void cry() {
-        increase("CRY");
+    public void report() {
+        increase("REPORT");
     }
 
     @Override

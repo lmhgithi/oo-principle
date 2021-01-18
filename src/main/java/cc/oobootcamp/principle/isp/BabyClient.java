@@ -6,7 +6,7 @@ public class BabyClient {
     private static final Logger LOGGER = Logger.getLogger(BabyClient.class.getName());
 
     public static void main(String[] args) {
-        HumanAble baby = new Baby();
+        Baby baby = new Baby();
         baby.cry();
         baby.drink();
         baby.cry();
@@ -18,11 +18,11 @@ public class BabyClient {
         baby.eat();
         baby.crawl();
 
-        long cryTimes = ((Baby) baby).getTimes("CRY");
-        long eatTimes = ((Baby) baby).getTimes("EAT");
-        long drinkTimes = ((Baby) baby).getTimes("DRINK");
-        long snoreTimes = ((Baby) baby).getTimes("SNORE");
-        long crawlTimes = ((Baby) baby).getTimes("CRAWL");
+        long cryTimes = baby.getTimes("CRY");
+        long eatTimes = baby.getTimes("EAT");
+        long drinkTimes = baby.getTimes("DRINK");
+        long snoreTimes = baby.getTimes("SNORE");
+        long crawlTimes = baby.getTimes("CRAWL");
 
         LOGGER.info("Cry " + cryTimes + " times");
         LOGGER.info("Eat " + eatTimes + " times");
