@@ -35,8 +35,6 @@ public class NormalParkingLot implements ParkingLot{
   }
 
   public Car pickUp(Ticket ticket) {
-//    if (ticket == null) return null;
-
     Car car = ticketCarMap.get(ticket);
     if (car != null) {
       availableSpace += 1;
