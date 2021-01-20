@@ -58,6 +58,21 @@ class SmartParkingBoyTest {
     assertThat(getAvailableSpaceOfXParkingLot(1)).isEqualTo(9);
     assertThat(getAvailableSpaceOfXParkingLot(2)).isEqualTo(10);
   }
+  @Test
+  void should_pick_up_car_when_two_parking_lot_has_most_available_spaces2() {
+    SmartParkingBoy smartParkingBoy2 = new SmartParkingBoy(new ArrayList<ParkingLot>() {{
+      add(new NormalParkingLot(10));
+      add(new NormalParkingLot(10));
+      add(new NormalParkingLot(9));
+    }});
+
+    Ticket ticket = smartParkingBoy2.park(new Car());
+
+    assertThat(ticket).isNotEqualTo(null);
+    assertThat(getAvailableSpaceOfXParkingLot(smartParkingBoy2, 0)).isEqualTo(9);
+    assertThat(getAvailableSpaceOfXParkingLot(smartParkingBoy2, 1)).isEqualTo(10);
+    assertThat(getAvailableSpaceOfXParkingLot(smartParkingBoy2, 2)).isEqualTo(9);
+  }
 
   @Test
   void should_not_park_with_graduate_parking_boy_when_all_parking_lot_is_full() {
@@ -116,6 +131,10 @@ class SmartParkingBoyTest {
   }
 
   private int getAvailableSpaceOfXParkingLot(int i) {
+    return smartParkingBoy.getParkingLots().get(i).getAvailableSpace();
+  }
+
+  private int getAvailableSpaceOfXParkingLot(SmartParkingBoy smartParkingBoy, int i) {
     return smartParkingBoy.getParkingLots().get(i).getAvailableSpace();
   }
 
