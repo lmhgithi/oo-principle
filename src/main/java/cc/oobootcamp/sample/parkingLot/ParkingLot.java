@@ -19,6 +19,8 @@ public interface ParkingLot {
 
   public int getAvailableSpace();
 
+  public double getAvailableRate();
+
   public Boolean checkIfTicketInThisParkingLot(Ticket ticket);
 
   public boolean hasSameCarParked(Car car);

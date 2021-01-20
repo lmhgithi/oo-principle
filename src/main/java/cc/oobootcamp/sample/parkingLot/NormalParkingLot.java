@@ -19,6 +19,7 @@ import java.util.Map;
 public class NormalParkingLot implements ParkingLot{
   private final Map<Ticket, Car> ticketCarMap = new HashMap<>();
   private int availableSpace;
+  private int totalSpace;
 
   public NormalParkingLot() {
     this.availableSpace = 10;
@@ -69,5 +70,7 @@ public class NormalParkingLot implements ParkingLot{
     return availableSpace > 0;
   }
 
-
+  public double getAvailableRate() {
+    return (double) availableSpace / (double) totalSpace;
+  }
 }
