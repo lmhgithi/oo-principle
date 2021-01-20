@@ -1,6 +1,7 @@
 package cc.oobootcamp.sample.parkingLot;
 
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,12 +52,8 @@ public class SmartParkingBoy implements ParkingBoy {
       return null;
     }
 
-    Optional<ParkingLot> parkingLot = findFirstAvailableParkingLot();
+    Optional<ParkingLot> parkingLot = findFirstAvailableParkingLotHasMostSpaces();
     return parkingLot.map(lot -> lot.park(car)).orElse(null);
-  }
-
-  private Optional<ParkingLot> findFirstAvailableParkingLot() {
-    return parkingLots.stream().filter(parkingLot -> parkingLot.getAvailableSpace() > 0).findFirst();
   }
 
   public Car pick(Ticket ticket) {
@@ -66,6 +63,12 @@ public class SmartParkingBoy implements ParkingBoy {
 
   public List<ParkingLot> getParkingLots() {
     return parkingLots;
+  }
+
+  private Optional<ParkingLot> findFirstAvailableParkingLotHasMostSpaces() {
+    return parkingLots.stream()
+        .filter(lot -> lot.getAvailableSpace() > 0)
+        .max(Comparator.comparing(ParkingLot::getAvailableSpace));
   }
 
   private Optional<ParkingLot> findAnyParkingLotTicketBelongTo(Ticket ticket) {

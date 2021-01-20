@@ -26,6 +26,21 @@ class SmartParkingBoyTest {
     assertThat(ticket).isNotEqualTo(null);
   }
 
+  @Test
+  void should_pick_up_car_when_only_one_parking_lot_has_most_available_spaces() {
+    smartParkingBoy.park(new Car());
+    smartParkingBoy.park(new Car());
+    assertThat(getAvailableSpaceOfXParkingLot(0)).isEqualTo(9);
+    assertThat(getAvailableSpaceOfXParkingLot(1)).isEqualTo(9);
+    assertThat(getAvailableSpaceOfXParkingLot(2)).isEqualTo(10);
+
+    Ticket ticket = smartParkingBoy.park(new Car());
+
+    assertThat(ticket).isNotEqualTo(null);
+    assertThat(getAvailableSpaceOfXParkingLot(0)).isEqualTo(9);
+    assertThat(getAvailableSpaceOfXParkingLot(1)).isEqualTo(9);
+    assertThat(getAvailableSpaceOfXParkingLot(2)).isEqualTo(9);
+  }
 
 
   @Test
@@ -37,8 +52,6 @@ class SmartParkingBoyTest {
 
     assertThat(carPickUp).isEqualTo(carPark);
   }
-
-
 
   @Test
   void should_not_pick_up_car_when_ticket_not_valid() {
@@ -71,4 +84,7 @@ class SmartParkingBoyTest {
     assertThat(ticket2).isEqualTo(null);
   }
 
+  private int getAvailableSpaceOfXParkingLot(int i) {
+    return smartParkingBoy.getParkingLots().get(i).getAvailableSpace();
+  }
 }
