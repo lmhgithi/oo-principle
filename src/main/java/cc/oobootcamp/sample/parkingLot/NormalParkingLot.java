@@ -18,7 +18,15 @@ import java.util.Map;
 
 public class NormalParkingLot implements ParkingLot{
   private final Map<Ticket, Car> ticketCarMap = new HashMap<>();
-  private int availableSpace = 10;
+  private int availableSpace;
+
+  public NormalParkingLot() {
+    this.availableSpace = 10;
+  }
+
+  public NormalParkingLot(int availableSpace) {
+    this.availableSpace = availableSpace;
+  }
 
   public Ticket park(Car car) {
     if (hasSameCarParked(car))
