@@ -55,6 +55,6 @@ public class SuperParkingBoy extends AbstractParkingBoy {
   protected Optional<ParkingLot> findParkingLot() {
     return this.getParkingLots().stream()
         .filter(lot -> lot.getAvailableSpace() > 0)
-        .max(Comparator.comparing(ParkingLot::getAvailableRate));
+        .max(Comparator.comparing(ParkingLot::getAvailableRate).thenComparing(ParkingLot::getAvailableSpace));
   }
 }

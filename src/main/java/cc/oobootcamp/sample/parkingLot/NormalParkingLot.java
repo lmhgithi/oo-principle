@@ -19,14 +19,16 @@ import java.util.Map;
 public class NormalParkingLot implements ParkingLot{
   private final Map<Ticket, Car> ticketCarMap = new HashMap<>();
   private int availableSpace;
-  private int totalSpace;
+  private final int totalSpace;
 
   public NormalParkingLot() {
     this.availableSpace = 10;
+    this.totalSpace = 10;
   }
 
   public NormalParkingLot(int availableSpace) {
     this.availableSpace = availableSpace;
+    this.totalSpace = availableSpace;
   }
 
   public Ticket park(Car car) {
@@ -64,6 +66,10 @@ public class NormalParkingLot implements ParkingLot{
 
   public int getAvailableSpace() {
     return availableSpace;
+  }
+
+  public void setAvailableSpace(int availableSpace) {
+    this.availableSpace = availableSpace;
   }
 
   private boolean hasAvailableSpace() {
