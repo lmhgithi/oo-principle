@@ -10,6 +10,8 @@ class SmartParkingBoyTest {
 
   private SmartParkingBoy smartParkingBoy;
 
+  private final int spacePerParkingLot = 10;
+
   @BeforeEach
   void beforeEach() {
     this.smartParkingBoy = new SmartParkingBoy(new ArrayList<ParkingLot>() {{
@@ -57,6 +59,20 @@ class SmartParkingBoyTest {
     assertThat(getAvailableSpaceOfXParkingLot(2)).isEqualTo(10);
   }
 
+  @Test
+  void should_not_park_with_graduate_parking_boy_when_all_parking_lot_is_full() {
+    givenParkOneParkingLotToFull(smartParkingBoy);
+    givenParkOneParkingLotToFull(smartParkingBoy);
+    givenParkOneParkingLotToFull(smartParkingBoy);
+
+    Ticket ticket = smartParkingBoy.park(new Car());
+
+    assertThat(ticket).isEqualTo(null);
+    assertThat(getAvailableSpaceOfXParkingLot(0)).isEqualTo(0);
+    assertThat(getAvailableSpaceOfXParkingLot(1)).isEqualTo(0);
+    assertThat(getAvailableSpaceOfXParkingLot(2)).isEqualTo(0);
+  }
+
 
   @Test
   void should_pick_up_car() {
@@ -101,5 +117,11 @@ class SmartParkingBoyTest {
 
   private int getAvailableSpaceOfXParkingLot(int i) {
     return smartParkingBoy.getParkingLots().get(i).getAvailableSpace();
+  }
+
+  private void givenParkOneParkingLotToFull(SmartParkingBoy smartParkingBoy) {
+    for (int i = 0; i < spacePerParkingLot; i++) {
+      smartParkingBoy.park(new Car());
+    }
   }
 }
