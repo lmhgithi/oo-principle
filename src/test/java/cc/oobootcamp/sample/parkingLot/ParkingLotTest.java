@@ -96,4 +96,17 @@ class ParkingLotTest {
     assertThat(ticket).isNotEqualTo(null);
     assertThat(ticket2).isEqualTo(null);
   }
+
+  @Test
+  void should_pick_up_using_other_parking_lots_ticket() {
+    ParkingLot parkingLot2 = new NormalParkingLot();
+    Ticket ticket = parkingLot.park(new Car());
+    Ticket ticket2 = parkingLot2.park(new Car());
+
+    Car carPickUp = parkingLot2.pickUp(ticket);
+    Car carPickUp2 = parkingLot.pickUp(ticket2);
+
+    assertThat(carPickUp).isEqualTo(null);
+    assertThat(carPickUp2).isEqualTo(null);
+  }
 }
