@@ -15,9 +15,9 @@ class SmartParkingBoyTest {
   @BeforeEach
   void beforeEach() {
     this.smartParkingBoy = new SmartParkingBoy(new ArrayList<ParkingLot>() {{
-      add(new NormalParkingLot());
-      add(new NormalParkingLot());
-      add(new NormalParkingLot());
+      add(new NormalParkingLot(spacePerParkingLot));
+      add(new NormalParkingLot(spacePerParkingLot));
+      add(new NormalParkingLot(spacePerParkingLot));
     }});
   }
 

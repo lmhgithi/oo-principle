@@ -27,6 +27,7 @@ import java.util.Optional;
  * 提示 这辆车已经停过了，重复停车
  *
  * ============================================
+ *
  * 当我给 smart parking boy 一张票据，且票据是有效的，smart parking boy负责的车场中有对应的ticket
  * 取车
  * smart parking boy 会给我返回我的车

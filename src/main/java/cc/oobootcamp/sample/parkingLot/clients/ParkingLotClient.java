@@ -1,4 +1,8 @@
-package cc.oobootcamp.sample.parkingLot;
+package cc.oobootcamp.sample.parkingLot.clients;
+
+import cc.oobootcamp.sample.parkingLot.Car;
+import cc.oobootcamp.sample.parkingLot.NormalParkingLot;
+import cc.oobootcamp.sample.parkingLot.Ticket;
 
 public class ParkingLotClient {
   private static void should_not_pick_up_car_when_ticket_not_valid() {
