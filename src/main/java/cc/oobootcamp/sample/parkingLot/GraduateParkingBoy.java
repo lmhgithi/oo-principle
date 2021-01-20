@@ -20,7 +20,7 @@ import java.util.Optional;
  *      同一个票据取两次，第一次成功取车，第二次不可取车，返回"票据错误"
  */
 
-public class GraduateParkingBoy {
+public class GraduateParkingBoy implements ParkingBoy{
   private final List<ParkingLot> parkingLots;
 
   public GraduateParkingBoy(List<ParkingLot> parkingLots) {
@@ -41,14 +41,14 @@ public class GraduateParkingBoy {
     return parkingLot.map(lot -> lot.pickUp(ticket)).orElse(null);
   }
 
+  public List<ParkingLot> getParkingLots() {
+    return parkingLots;
+  }
+
   private Optional<ParkingLot> findAnyParkingLotTicketBelongTo(Ticket ticket) {
     return parkingLots.stream()
         .filter(lot -> lot.checkIfTicketInThisParkingLot(ticket))
         .findAny();
-  }
-
-  public List<ParkingLot> getParkingLots() {
-    return parkingLots;
   }
 
   private Optional<ParkingLot> findFirstAvailableParkingLot() {
