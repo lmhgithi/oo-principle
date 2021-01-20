@@ -21,4 +21,5 @@ public interface ParkingLot {
 
   public Boolean checkIfTicketInThisParkingLot(Ticket ticket);
 
+  public boolean hasSameCarParked(Car car);
 }

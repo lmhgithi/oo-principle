@@ -48,6 +48,11 @@ public class NormalParkingLot implements ParkingLot{
     return ticketCarMap.containsKey(ticket);
   }
 
+  public boolean hasSameCarParked(Car car) {
+    Collection<Car> values = ticketCarMap.values();
+    return values.contains(car);
+  }
+
   public int getAvailableSpace() {
     return availableSpace;
   }
@@ -56,8 +61,5 @@ public class NormalParkingLot implements ParkingLot{
     return availableSpace > 0;
   }
 
-  private boolean hasSameCarParked(Car car) {
-    Collection<Car> values = ticketCarMap.values();
-    return values.contains(car);
-  }
+
 }

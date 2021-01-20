@@ -110,6 +110,17 @@ class GraduateParkingBoyTest {
     assertThat(carPickUpTwice).isEqualTo(null);
   }
 
+  @Test
+  void should_not_parked_same_car_twice() {
+    Car car = new Car();
+
+    Ticket ticket = graduateParkingBoy.park(car);
+    Ticket ticket2 = graduateParkingBoy.park(car);
+
+    assertThat(ticket).isNotEqualTo(null);
+    assertThat(ticket2).isEqualTo(null);
+  }
+
 
   private int getAvailableSpaceOfXParkingLot(int i) {
     return graduateParkingBoy.getParkingLots().get(i).getAvailableSpace();

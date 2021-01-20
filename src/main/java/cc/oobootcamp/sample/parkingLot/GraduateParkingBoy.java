@@ -28,6 +28,10 @@ public class GraduateParkingBoy {
   }
 
   public Ticket park(Car car) {
+    if (checkIfHasSameCarParked(car)) {
+      return null;
+    }
+
     Optional<ParkingLot> parkingLot = findFirstAvailableParkingLot();
     return parkingLot.map(lot -> lot.park(car)).orElse(null);
   }
@@ -49,5 +53,10 @@ public class GraduateParkingBoy {
 
   private Optional<ParkingLot> findFirstAvailableParkingLot() {
     return parkingLots.stream().filter(parkingLot -> parkingLot.getAvailableSpace() > 0).findFirst();
+  }
+
+  private Boolean checkIfHasSameCarParked(Car car) {
+    Optional<ParkingLot> any = parkingLots.stream().filter(parkingLot -> parkingLot.hasSameCarParked(car)).findAny();
+    return any.isPresent();
   }
 }
