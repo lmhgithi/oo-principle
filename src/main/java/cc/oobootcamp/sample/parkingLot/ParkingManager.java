@@ -1,5 +1,7 @@
 package cc.oobootcamp.sample.parkingLot;
 
+import cc.oobootcamp.sample.parkingLot.exceptions.NoParkingBoyException;
+import cc.oobootcamp.sample.parkingLot.exceptions.RepeatedParkingException;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,19 +49,41 @@ public class ParkingManager {
   }
 
   public Ticket park(Car car) {
+    if(checkIfHasSameCarParked(car)) throw new RepeatedParkingException();
     return findAvailableParkingBoy()
         .map(parkingBoy -> parkingBoy.park(car))
         .orElse(null);
   }
 
-  public Car pickUp(Ticket ticket) {
-    return null;
+  public Car pick(Ticket ticket) {
+    Optional<AbstractParkingBoy> responsibleParkingBoy = findResponsibleParkingBoy(ticket);
+    return responsibleParkingBoy.map(parkingBoy -> parkingBoy.pick(ticket))
+        .orElse(null);
   }
 
   private Optional<AbstractParkingBoy> findAvailableParkingBoy() {
+    if (parkingBoys.size() == 0) {
+      throw new NoParkingBoyException();
+    }
     return parkingBoys
         .stream()
         .filter(parkingBoy -> parkingBoy.findParkingLot().isPresent())
         .findFirst();
+  }
+
+  private Boolean checkIfHasSameCarParked(Car car) {
+    return parkingBoys
+        .stream()
+        .anyMatch(parkingBoy -> parkingBoy.checkIfHasSameCarParked(car));
+  }
+
+  private Optional<AbstractParkingBoy> findResponsibleParkingBoy(Ticket ticket) {
+    return parkingBoys
+        .stream()
+        .filter(parkingBoy -> parkingBoy
+                .findAnyParkingLotTicketBelongTo(ticket)
+                .isPresent())
+        .findAny();
+
   }
 }

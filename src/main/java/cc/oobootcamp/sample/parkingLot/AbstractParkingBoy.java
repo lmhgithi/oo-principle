@@ -29,7 +29,7 @@ public abstract class AbstractParkingBoy {
     return parkingLots;
   }
 
-  private Optional<ParkingLot> findAnyParkingLotTicketBelongTo(Ticket ticket) {
+  public Optional<ParkingLot> findAnyParkingLotTicketBelongTo(Ticket ticket) {
     return parkingLots.stream()
         .filter(lot -> lot.checkIfTicketInThisParkingLot(ticket))
         .findAny();
@@ -37,7 +37,7 @@ public abstract class AbstractParkingBoy {
 
   abstract Optional<ParkingLot> findParkingLot();
 
-  private Boolean checkIfHasSameCarParked(Car car) {
+  public Boolean checkIfHasSameCarParked(Car car) {
     Optional<ParkingLot> any = parkingLots.stream().filter(parkingLot -> parkingLot.hasSameCarParked(car)).findAny();
     return any.isPresent();
   }
