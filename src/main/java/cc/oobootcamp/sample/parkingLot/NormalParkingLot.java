@@ -45,6 +45,10 @@ public class NormalParkingLot implements ParkingLot{
     return null;
   }
 
+  public Boolean checkIfTicketInThisParkingLot(Ticket ticket) {
+    return ticketCarMap.containsKey(ticket);
+  }
+
   public int getAvailableSpace() {
     return availableSpace;
   }

@@ -1,8 +1,6 @@
 package cc.oobootcamp.sample.parkingLot;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,14 +23,6 @@ import java.util.Optional;
 public class GraduateParkingBoy {
   private final List<ParkingLot> parkingLots;
 
-  public GraduateParkingBoy() {
-    this.parkingLots = new ArrayList<ParkingLot>() {{
-      add(new NormalParkingLot());
-      add(new NormalParkingLot());
-      add(new NormalParkingLot());
-    }};
-  }
-
   public GraduateParkingBoy(List<ParkingLot> parkingLots) {
     this.parkingLots = parkingLots;
   }
@@ -43,17 +33,21 @@ public class GraduateParkingBoy {
   }
 
   public Car pick(Ticket ticket) {
-    for (ParkingLot parkingLots : parkingLots) {
-      Car car = parkingLots.pickUp(ticket);
-      if (car != null) return car;
-    }
-    return null;
+    Optional<ParkingLot> parkingLot = findAnyParkingLotTicketBelongTo(ticket);
+    return parkingLot.map(lot -> lot.pickUp(ticket)).orElse(null);
+  }
+
+  private Optional<ParkingLot> findAnyParkingLotTicketBelongTo(Ticket ticket) {
+    return parkingLots.stream()
+        .filter(lot -> lot.checkIfTicketInThisParkingLot(ticket) != null)
+        .findAny();
   }
 
 
   public List<ParkingLot> getParkingLots() {
     return parkingLots;
   }
+
 
   private Optional<ParkingLot> findFirstAvailableParkingLot() {
     return parkingLots.stream().filter(parkingLot -> parkingLot.getAvailableSpace() > 0).findFirst();

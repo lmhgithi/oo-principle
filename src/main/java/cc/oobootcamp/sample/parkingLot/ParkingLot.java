@@ -19,4 +19,6 @@ public interface ParkingLot {
 
   public int getAvailableSpace();
 
+  public Boolean checkIfTicketInThisParkingLot(Ticket ticket);
+
 }

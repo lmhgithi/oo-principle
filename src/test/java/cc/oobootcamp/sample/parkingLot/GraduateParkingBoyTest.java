@@ -15,7 +15,11 @@ class GraduateParkingBoyTest {
 
   @BeforeEach
   void beforeEach() {
-    this.graduateParkingBoy = new GraduateParkingBoy();
+    this.graduateParkingBoy = new GraduateParkingBoy(new ArrayList<ParkingLot>() {{
+      add(new NormalParkingLot());
+      add(new NormalParkingLot());
+      add(new NormalParkingLot());
+    }});
   }
 
   @Test
