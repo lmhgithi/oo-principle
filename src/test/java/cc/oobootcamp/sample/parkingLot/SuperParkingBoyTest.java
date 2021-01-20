@@ -28,8 +28,6 @@ class SuperParkingBoyTest {
     assertThat(ticket).isNotEqualTo(null);
   }
 
-
-
   @Test
   void should_park_car_to_highest_available_rate_parking_lot_when_only_one_parking_lot_has_most_available_rate() {
     this.superParkingBoy = new SuperParkingBoy(new ArrayList<ParkingLot>() {{
@@ -76,8 +74,6 @@ class SuperParkingBoyTest {
     assertThat(getAvailableSpaceOfXParkingLot(0)).isEqualTo(49);
     assertThat(getAvailableSpaceOfXParkingLot(1)).isEqualTo(50);
   }
-
-
 
   @Test
   void should_not_park_with_graduate_parking_boy_when_all_parking_lot_is_full() {
