@@ -39,15 +39,13 @@ public class GraduateParkingBoy {
 
   private Optional<ParkingLot> findAnyParkingLotTicketBelongTo(Ticket ticket) {
     return parkingLots.stream()
-        .filter(lot -> lot.checkIfTicketInThisParkingLot(ticket) != null)
+        .filter(lot -> lot.checkIfTicketInThisParkingLot(ticket))
         .findAny();
   }
-
 
   public List<ParkingLot> getParkingLots() {
     return parkingLots;
   }
-
 
   private Optional<ParkingLot> findFirstAvailableParkingLot() {
     return parkingLots.stream().filter(parkingLot -> parkingLot.getAvailableSpace() > 0).findFirst();

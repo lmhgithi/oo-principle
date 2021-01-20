@@ -31,7 +31,7 @@ class GraduateParkingBoyTest {
 
   @Test
   void should_park_to_second_parking_lot_with_graduate_parking_boy_when_first_parking_is_full() {
-    parkOneParkingLotToFull(graduateParkingBoy);
+    givenParkOneParkingLotToFull(graduateParkingBoy);
 
     Ticket ticket = graduateParkingBoy.park(new Car());
 
@@ -43,8 +43,8 @@ class GraduateParkingBoyTest {
 
   @Test
   void should_park_to_third_parking_lot_with_graduate_parking_boy_when_first_and_second_parking_is_full() {
-    parkOneParkingLotToFull(graduateParkingBoy);
-    parkOneParkingLotToFull(graduateParkingBoy);
+    givenParkOneParkingLotToFull(graduateParkingBoy);
+    givenParkOneParkingLotToFull(graduateParkingBoy);
 
     Ticket ticket = graduateParkingBoy.park(new Car());
 
@@ -56,9 +56,9 @@ class GraduateParkingBoyTest {
 
   @Test
   void should_not_park_with_graduate_parking_boy_when_all_parking_lot_is_full() {
-    parkOneParkingLotToFull(graduateParkingBoy);
-    parkOneParkingLotToFull(graduateParkingBoy);
-    parkOneParkingLotToFull(graduateParkingBoy);
+    givenParkOneParkingLotToFull(graduateParkingBoy);
+    givenParkOneParkingLotToFull(graduateParkingBoy);
+    givenParkOneParkingLotToFull(graduateParkingBoy);
 
     Ticket ticket = graduateParkingBoy.park(new Car());
 
@@ -80,9 +80,9 @@ class GraduateParkingBoyTest {
 
   @Test
   void should_can_park_after_pick_up_car_when_all_parking_lot_is_full() {
-    parkOneParkingLotToFull(graduateParkingBoy);
-    parkOneParkingLotToFull(graduateParkingBoy);
-    List<Ticket> tickets = parkOneParkingLotToFull(graduateParkingBoy);
+    givenParkOneParkingLotToFull(graduateParkingBoy);
+    givenParkOneParkingLotToFull(graduateParkingBoy);
+    List<Ticket> tickets = givenParkOneParkingLotToFull(graduateParkingBoy);
 
     graduateParkingBoy.pick(tickets.get(0));
 
@@ -115,7 +115,7 @@ class GraduateParkingBoyTest {
     return graduateParkingBoy.getParkingLots().get(i).getAvailableSpace();
   }
 
-  private List<Ticket> parkOneParkingLotToFull(GraduateParkingBoy graduateParkingBoy) {
+  private List<Ticket> givenParkOneParkingLotToFull(GraduateParkingBoy graduateParkingBoy) {
     List<Ticket> tickets = new ArrayList<>();
     for (int i = 0; i < spacePerParkingLot; i++) {
       Ticket ticket = graduateParkingBoy.park(new Car());
