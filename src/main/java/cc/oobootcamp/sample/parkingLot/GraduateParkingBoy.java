@@ -20,43 +20,18 @@ import java.util.Optional;
  *      同一个票据取两次，第一次成功取车，第二次不可取车，返回"票据错误"
  */
 
-public class GraduateParkingBoy implements ParkingBoy{
-  private final List<ParkingLot> parkingLots;
+public class GraduateParkingBoy extends AbstractParkingBoy {
 
   public GraduateParkingBoy(List<ParkingLot> parkingLots) {
-    this.parkingLots = parkingLots;
+    super(parkingLots);
   }
 
-  public Ticket park(Car car) {
-    if (checkIfHasSameCarParked(car)) {
-      return null;
-    }
-
-    Optional<ParkingLot> parkingLot = findFirstAvailableParkingLot();
-    return parkingLot.map(lot -> lot.park(car)).orElse(null);
+  @Override
+  protected Optional<ParkingLot> findParkingLot() {
+    return this.getParkingLots()
+        .stream()
+        .filter(parkingLot -> parkingLot.getAvailableSpace() > 0)
+        .findFirst();
   }
 
-  public Car pick(Ticket ticket) {
-    Optional<ParkingLot> parkingLot = findAnyParkingLotTicketBelongTo(ticket);
-    return parkingLot.map(lot -> lot.pickUp(ticket)).orElse(null);
-  }
-
-  public List<ParkingLot> getParkingLots() {
-    return parkingLots;
-  }
-
-  private Optional<ParkingLot> findAnyParkingLotTicketBelongTo(Ticket ticket) {
-    return parkingLots.stream()
-        .filter(lot -> lot.checkIfTicketInThisParkingLot(ticket))
-        .findAny();
-  }
-
-  private Optional<ParkingLot> findFirstAvailableParkingLot() {
-    return parkingLots.stream().filter(parkingLot -> parkingLot.getAvailableSpace() > 0).findFirst();
-  }
-
-  private Boolean checkIfHasSameCarParked(Car car) {
-    Optional<ParkingLot> any = parkingLots.stream().filter(parkingLot -> parkingLot.hasSameCarParked(car)).findAny();
-    return any.isPresent();
-  }
 }
