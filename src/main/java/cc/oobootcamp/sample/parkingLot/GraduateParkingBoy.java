@@ -20,7 +20,7 @@ import java.util.Optional;
  *      同一个票据取两次，第一次成功取车，第二次不可取车，返回"票据错误"
  */
 
-public class GraduateParkingBoy extends AbstractParkingBoy {
+public class GraduateParkingBoy extends AbstractParkingPerson {
 
   public GraduateParkingBoy(List<ParkingLot> parkingLots) {
     super(parkingLots);

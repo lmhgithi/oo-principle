@@ -2,6 +2,7 @@ package cc.oobootcamp.sample.parkingLot;
 
 import cc.oobootcamp.sample.parkingLot.exceptions.NoParkingBoyException;
 import cc.oobootcamp.sample.parkingLot.exceptions.RepeatedParkingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,28 +42,73 @@ import java.util.Optional;
  * 第一次取车成功。第二次取车失败，提示 票据错误
  */
 
-public class ParkingManager {
-  List<AbstractParkingBoy> parkingBoys;
 
-  public ParkingManager(List<AbstractParkingBoy> parkingBoys) {
-    this.parkingBoys = parkingBoys;
+
+/** <p>
+ * 给parking manager 一辆车，当车是相同的
+     * 让管理员自己停车
+     * 提示 这辆车已经停过了，重复停车
+     * <p>
+ * 给manager 一辆车，让manager 去停车，manager负责的停车场有空位
+     * 让管理员自己停车
+     * 提示 停车成功，返回ticket
+     * <p>
+ * 给manager 一辆车，让manager 去停车，manager负责的停车场没有空位
+     * 让管理员自己停车
+     * 提示 所有车位已满
+     * <p>
+ *
+ *   =====================================
+ *
+ * 给manager 一个Ticket，当Ticket对应的车在 manager 负责的停车场
+     * 取车
+     * 取车成功，返回ticket
+     * <p>
+ * 给manager一张Ticket，Ticket对应的车在 boy 负责的停车场
+     * 取车
+     * boy取车成功，返回ticket
+     * <p>
+ * 给manager一个错误的Ticket，
+     * 取车
+     * 提示 票据错误
+     * <p>
+ * 给manager一张Ticket，Ticket是正确的
+     * 取两次车
+     * 第一次取车成功，第二次取车失败
+     * <p>
+*/
+public class ParkingManager extends AbstractParkingPerson{
+  private final List<AbstractParkingPerson> parkingBoys;
+
+  public ParkingManager(List<AbstractParkingPerson> parkingBoys, List<ParkingLot> parkingLots) {
+    super(parkingLots);
+    this.parkingBoys = parkingBoys == null ? new ArrayList<AbstractParkingPerson>() : parkingBoys;
   }
 
-  public Ticket park(Car car) {
+  public Ticket parkByParkingBoy(Car car) {
     if(checkIfHasSameCarParked(car)) throw new RepeatedParkingException();
+
     return findAvailableParkingBoy()
         .map(parkingBoy -> parkingBoy.park(car))
         .orElse(null);
   }
 
   public Car pick(Ticket ticket) {
-    Optional<AbstractParkingBoy> responsibleParkingBoy = findResponsibleParkingBoy(ticket);
+    Optional<AbstractParkingPerson> responsibleParkingBoy = findResponsibleParkingBoy(ticket);
     return responsibleParkingBoy.map(parkingBoy -> parkingBoy.pick(ticket))
         .orElse(null);
   }
 
-  private Optional<AbstractParkingBoy> findAvailableParkingBoy() {
-    if (parkingBoys.size() == 0) {
+  @Override
+  Optional<ParkingLot> findParkingLot() {
+    return this.getParkingLots()
+        .stream()
+        .filter(parkingLot -> parkingLot.getAvailableSpace() > 0)
+        .findFirst();
+  }
+
+  private Optional<AbstractParkingPerson> findAvailableParkingBoy() {
+    if (parkingBoys == null || parkingBoys.isEmpty()) {
       throw new NoParkingBoyException();
     }
     return parkingBoys
@@ -71,13 +117,17 @@ public class ParkingManager {
         .findFirst();
   }
 
-  private Boolean checkIfHasSameCarParked(Car car) {
+  @Override
+  public Boolean checkIfHasSameCarParked(Car car) {
     return parkingBoys
         .stream()
-        .anyMatch(parkingBoy -> parkingBoy.checkIfHasSameCarParked(car));
+        .anyMatch(parkingBoy -> parkingBoy.checkIfHasSameCarParked(car))
+        || this.getParkingLots()
+        .stream()
+        .anyMatch(parkingLot -> parkingLot.hasSameCarParked(car));
   }
 
-  private Optional<AbstractParkingBoy> findResponsibleParkingBoy(Ticket ticket) {
+  private Optional<AbstractParkingPerson> findResponsibleParkingBoy(Ticket ticket) {
     return parkingBoys
         .stream()
         .filter(parkingBoy -> parkingBoy

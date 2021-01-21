@@ -45,7 +45,7 @@ import java.util.Optional;
  * 第一次取车成功。第二次取车失败，提示 票据错误
  */
 
-public class SuperParkingBoy extends AbstractParkingBoy {
+public class SuperParkingBoy extends AbstractParkingPerson {
 
   public SuperParkingBoy(List<ParkingLot> parkingLots) {
     super(parkingLots);

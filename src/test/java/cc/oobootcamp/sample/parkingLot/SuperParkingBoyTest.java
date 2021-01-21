@@ -1,7 +1,9 @@
 package cc.oobootcamp.sample.parkingLot;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import cc.oobootcamp.sample.parkingLot.exceptions.RepeatedParkingException;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -123,12 +125,10 @@ class SuperParkingBoyTest {
   @Test
   void should_not_parked_same_car_twice() {
     Car car = new Car();
-
     Ticket ticket = superParkingBoy.park(car);
-    Ticket ticket2 = superParkingBoy.park(car);
 
+    assertThrows(RepeatedParkingException.class, () -> superParkingBoy.park(car));
     assertThat(ticket).isNotEqualTo(null);
-    assertThat(ticket2).isEqualTo(null);
   }
 
   private int getAvailableSpaceOfXParkingLot(int i) {

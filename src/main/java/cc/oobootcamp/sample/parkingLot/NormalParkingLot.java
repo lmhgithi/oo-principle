@@ -1,5 +1,6 @@
 package cc.oobootcamp.sample.parkingLot;
 
+import cc.oobootcamp.sample.parkingLot.exceptions.RepeatedParkingException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class NormalParkingLot implements ParkingLot{
 
   public Ticket park(Car car) {
     if (hasSameCarParked(car))
-      return null;
+      throw new RepeatedParkingException();
 
     if (hasAvailableSpace()) {
       Ticket ticket = new Ticket();

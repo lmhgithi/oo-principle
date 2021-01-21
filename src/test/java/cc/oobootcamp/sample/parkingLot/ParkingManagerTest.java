@@ -1,12 +1,11 @@
 package cc.oobootcamp.sample.parkingLot;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cc.oobootcamp.sample.parkingLot.exceptions.NoParkingBoyException;
 import cc.oobootcamp.sample.parkingLot.exceptions.RepeatedParkingException;
 import java.util.ArrayList;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +17,7 @@ class ParkingManagerTest {
 
   @BeforeEach
   void beforeEach() {
-    parkingManager = new ParkingManager(new ArrayList<AbstractParkingBoy>() {{
+    parkingManager = new ParkingManager(new ArrayList<AbstractParkingPerson>() {{
       add(new GraduateParkingBoy(new ArrayList<ParkingLot>() {{
         add(new NormalParkingLot(spacePerParkingLot));
         add(new NormalParkingLot(spacePerParkingLot));
@@ -31,12 +30,15 @@ class ParkingManagerTest {
         add(new NormalParkingLot(spacePerParkingLot));
         add(new NormalParkingLot(spacePerParkingLot));
       }}));
+    }}, new ArrayList<ParkingLot>() {{
+      add(new NormalParkingLot(spacePerParkingLot));
+      add(new NormalParkingLot(spacePerParkingLot));
     }});
   }
 
   @Test
   void should_park_when_has_parking_boys_and_space() {
-    Ticket ticket = parkingManager.park(new Car());
+    Ticket ticket = parkingManager.parkByParkingBoy(new Car());
 
     assertThat(ticket).isNotEqualTo(null);
   }
@@ -46,7 +48,7 @@ class ParkingManagerTest {
     givenParkOneBoyToFull();
     givenParkOneBoyToFull();
 
-    Ticket ticket = parkingManager.park(new Car());
+    Ticket ticket = parkingManager.parkByParkingBoy(new Car());
 
     assertThat(ticket).isNotEqualTo(null);
   }
@@ -57,32 +59,32 @@ class ParkingManagerTest {
     givenParkOneBoyToFull();
     givenParkOneBoyToFull();
 
-    Ticket ticket = parkingManager.park(new Car());
+    Ticket ticket = parkingManager.parkByParkingBoy(new Car());
 
     assertThat(ticket).isEqualTo(null);
   }
 
   @Test
   void should_throw_when_has_no_parking_boys() {
-    parkingManager = new ParkingManager(new ArrayList<AbstractParkingBoy>());
+    parkingManager = new ParkingManager(new ArrayList<AbstractParkingPerson>(), new ArrayList<ParkingLot>());
 
-    assertThrows(NoParkingBoyException.class, () -> parkingManager.park(new Car()));
+    assertThrows(NoParkingBoyException.class, () -> parkingManager.parkByParkingBoy(new Car()));
   }
 
   @Test
   void should_throw_when_park_same_car_to_different_lot_of_different_parking_boy() {
     Car car = new Car();
-    parkingManager.park(car);
+    parkingManager.parkByParkingBoy(car);
     givenParkOneBoyToFull();
 
-    assertThrows(RepeatedParkingException.class, () -> parkingManager.park(car));
+    assertThrows(RepeatedParkingException.class, () -> parkingManager.parkByParkingBoy(car));
   }
 
 
   @Test
   void should_pick_up_car() {
     Car carPark = new Car();
-    Ticket ticket = parkingManager.park(carPark);
+    Ticket ticket = parkingManager.parkByParkingBoy(carPark);
 
     Car carPickUp = parkingManager.pick(ticket);
 
@@ -100,7 +102,7 @@ class ParkingManagerTest {
 
   @Test
   void should_not_pick_up_car_twice_using_same_ticket() {
-    Ticket ticket = parkingManager.park(new Car());
+    Ticket ticket = parkingManager.parkByParkingBoy(new Car());
 
     Car carPickUpOnce = parkingManager.pick(ticket);
     Car carPickUpTwice = parkingManager.pick(ticket);
@@ -110,11 +112,56 @@ class ParkingManagerTest {
   }
 
 
+  @Test
+  void should_not_park_twice_with_manager() {
+    givenParkOneParkingLotToFull();
+    Car car = new Car();
+    Ticket ticket = parkingManager.park(car);
+
+    assertThrows(RepeatedParkingException.class, () -> parkingManager.park(car));
+    assertThat(ticket).isNotEqualTo(null);
+  }
+
+  @Test
+  void should_not_park_twice_with_manager_and_parking_boy() {
+    givenParkOneParkingLotToFull();
+    Car car = new Car();
+    Ticket ticket = parkingManager.park(car);
+
+    assertThrows(RepeatedParkingException.class, () -> parkingManager.parkByParkingBoy(car));
+    assertThat(ticket).isNotEqualTo(null);
+  }
+
+  @Test
+  void should_park_with_manager_when_all_parking_lot_is_not_full() {
+    givenParkOneParkingLotToFull();
+
+    Ticket ticket = parkingManager.park(new Car());
+
+    assertThat(ticket).isNotEqualTo(null);
+  }
+
+  @Test
+  void should_not_park_with_manager_when_all_parking_lot_is_full() {
+    givenParkOneParkingLotToFull();
+    givenParkOneParkingLotToFull();
+    givenParkOneParkingLotToFull();
+
+    Ticket ticket = parkingManager.park(new Car());
+
+    assertThat(ticket).isEqualTo(null);
+  }
+
   private void givenParkOneBoyToFull() {
     for (int i = 0; i < spacePerParkingLot * 2; i++) {
+      parkingManager.parkByParkingBoy(new Car());
+    }
+  }
+
+  private void givenParkOneParkingLotToFull() {
+    for (int i = 0; i < spacePerParkingLot; i++) {
       parkingManager.park(new Car());
     }
-
   }
 
 }

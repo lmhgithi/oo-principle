@@ -1,19 +1,21 @@
 package cc.oobootcamp.sample.parkingLot;
 
 
+import cc.oobootcamp.sample.parkingLot.exceptions.RepeatedParkingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractParkingBoy {
+public abstract class AbstractParkingPerson {
   private final List<ParkingLot> parkingLots;
 
-  public AbstractParkingBoy(List<ParkingLot> parkingLots) {
-    this.parkingLots = parkingLots;
+  public AbstractParkingPerson(List<ParkingLot> parkingLots) {
+    this.parkingLots = parkingLots == null ? new ArrayList<ParkingLot>() : parkingLots;
   }
 
   public Ticket park(Car car) {
     if (checkIfHasSameCarParked(car)) {
-      return null;
+      throw new RepeatedParkingException();
     }
 
     Optional<ParkingLot> parkingLot = findParkingLot();
