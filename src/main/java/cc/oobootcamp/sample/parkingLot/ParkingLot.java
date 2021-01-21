@@ -23,7 +23,11 @@ public interface ParkingLot {
 
   public int getTotalSpace();
 
+  public String getNameTag();
+
   public void setAvailableSpace(int availableSpace);
+
+  public ParkingReport.ReportLine getStatistics(Collector collector);
 
   public Boolean checkIfTicketInThisParkingLot(Ticket ticket);
 

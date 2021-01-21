@@ -11,10 +11,10 @@ import cc.oobootcamp.sample.parkingLot.util.ParkingReportPrinter;
 public class ParkingDirector {
 
   public static void getParkingReport(ParkingManager parkingManager) {
-    parkingManager.getParkingReport(new DefaultParkingReportPrinter());
+    parkingManager.getParkingReport(new DefaultParkingReportPrinter(), new ParkingReportCollector());
   }
 
   public static void getParkingReport(ParkingManager parkingManager, ParkingReportPrinter reportPrinter) {
-    parkingManager.getParkingReport(reportPrinter);
+    parkingManager.getParkingReport(reportPrinter, new ParkingReportCollector());
   }
 }

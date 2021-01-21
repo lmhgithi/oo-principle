@@ -73,8 +73,17 @@ public class NormalParkingLot implements ParkingLot{
     return totalSpace;
   }
 
+  public String getNameTag() {
+    return "P";
+  }
+
   public void setAvailableSpace(int availableSpace) {
     this.availableSpace = availableSpace;
+  }
+
+  @Override
+  public ParkingReport.ReportLine getStatistics(Collector collector) {
+    return collector.collect(this);
   }
 
   private boolean hasAvailableSpace() {

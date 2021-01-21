@@ -58,4 +58,11 @@ public abstract class AbstractParkingPerson {
         .sum();
   }
 
+  public ParkingReport getStatistics(Collector collector) {
+    return collector.collect(this);
+  }
+
+  public String getNameTag() {
+    return "B";
+  }
 }

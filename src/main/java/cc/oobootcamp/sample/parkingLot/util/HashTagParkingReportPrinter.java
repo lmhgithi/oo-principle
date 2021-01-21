@@ -7,7 +7,7 @@ public class HashTagParkingReportPrinter implements ParkingReportPrinter {
   public void print(ParkingReport parkingReport) {
     parkingReport.getLines().forEach(line -> {
           for (int i = 0; i < line.level+1; i++)
-            System.out.print("#");
+            System.out.print("# ");
           System.out.print(line.role + " ");
           System.out.print(line.parkedSpace  + " ");
           System.out.println(line.totalSpace);
