@@ -1,6 +1,7 @@
 package cc.oobootcamp.sample.parkingLot;
 
-import cc.oobootcamp.sample.parkingLot.util.ReportGenerator;
+import cc.oobootcamp.sample.parkingLot.util.DefaultParkingReportPrinter;
+import cc.oobootcamp.sample.parkingLot.util.ParkingReportPrinter;
 
 /**
  * 给一个parking director,
@@ -9,7 +10,11 @@ import cc.oobootcamp.sample.parkingLot.util.ReportGenerator;
  */
 public class ParkingDirector {
 
-  public static ParkingReport getParkingReport(ParkingManager parkingManager, ReportGenerator reportGenerator) {
-    return reportGenerator.generate(parkingManager);
+  public static void getParkingReport(ParkingManager parkingManager) {
+    parkingManager.getParkingReport(new DefaultParkingReportPrinter());
+  }
+
+  public static void getParkingReport(ParkingManager parkingManager, ParkingReportPrinter reportPrinter) {
+    parkingManager.getParkingReport(reportPrinter);
   }
 }

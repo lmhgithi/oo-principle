@@ -2,13 +2,19 @@ package cc.oobootcamp.sample.parkingLot;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import cc.oobootcamp.sample.parkingLot.util.NormalReportGenerator;
+import cc.oobootcamp.sample.parkingLot.AbstractParkingPerson;
+import cc.oobootcamp.sample.parkingLot.GraduateParkingBoy;
+import cc.oobootcamp.sample.parkingLot.NormalParkingLot;
+import cc.oobootcamp.sample.parkingLot.ParkingDirector;
+import cc.oobootcamp.sample.parkingLot.ParkingLot;
+import cc.oobootcamp.sample.parkingLot.ParkingManager;
+import cc.oobootcamp.sample.parkingLot.ParkingReport;
+import cc.oobootcamp.sample.parkingLot.util.ReportGenerator;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ParkingDirectorTest {
-
+class ReportGeneratorTest {
   private ParkingManager parkingManager;
 
   private final int spacePerParkingLot = 10;
@@ -37,8 +43,7 @@ class ParkingDirectorTest {
     parkingManager.getParkingBoys().get(0).getParkingLots().get(0).setAvailableSpace(9);
     parkingManager.getParkingBoys().get(0).getParkingLots().get(1).setAvailableSpace(8);
 
-    ParkingReport parkingReport = ParkingDirector.getParkingReport(parkingManager, new NormalReportGenerator());
-
+    ParkingReport parkingReport = ReportGenerator.generate(parkingManager);
     assertThat(parkingReport).isNotNull();
     assertThat(parkingReport.getLines().get(0).level).isEqualTo(parkingReportExpected.getLines().get(0).level);
     assertThat(parkingReport.getLines().get(0).parkedSpace).isEqualTo(parkingReportExpected.getLines().get(0).parkedSpace);
@@ -49,5 +54,4 @@ class ParkingDirectorTest {
     assertThat(parkingReport.getLines().get(3).parkedSpace).isEqualTo(parkingReportExpected.getLines().get(3).parkedSpace);
     assertThat(parkingReport.getLines().get(4).parkedSpace).isEqualTo(parkingReportExpected.getLines().get(4).parkedSpace);
   }
-
 }

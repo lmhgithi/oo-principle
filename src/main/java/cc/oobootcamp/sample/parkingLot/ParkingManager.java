@@ -2,6 +2,8 @@ package cc.oobootcamp.sample.parkingLot;
 
 import cc.oobootcamp.sample.parkingLot.exceptions.NoParkingBoyException;
 import cc.oobootcamp.sample.parkingLot.exceptions.RepeatedParkingException;
+import cc.oobootcamp.sample.parkingLot.util.ParkingReportPrinter;
+import cc.oobootcamp.sample.parkingLot.util.ReportGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -143,5 +145,10 @@ public class ParkingManager extends AbstractParkingPerson {
         parkingBoys.stream()
             .mapToInt(AbstractParkingPerson::getTotalSpace)
             .sum();
+  }
+
+  public void getParkingReport(ParkingReportPrinter parkingReportPrinter) {
+    ParkingReport parkingReport = ReportGenerator.generate(this);
+    parkingReportPrinter.print(parkingReport);
   }
 }

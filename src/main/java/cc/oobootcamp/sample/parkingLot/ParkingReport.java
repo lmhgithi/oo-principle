@@ -20,10 +20,10 @@ public class ParkingReport {
   }
 
   public static class ReportLine {
-    int level;
-    String role;
-    int parkedSpace;
-    int totalSpace;
+    public int level;
+    public String role;
+    public int parkedSpace;
+    public int totalSpace;
 
     public ReportLine(int level, String role, int parkedSpace, int totalSpace) {
       this.level = level;
