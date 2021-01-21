@@ -69,6 +69,10 @@ public class NormalParkingLot implements ParkingLot{
     return availableSpace;
   }
 
+  public int getTotalSpace() {
+    return totalSpace;
+  }
+
   public void setAvailableSpace(int availableSpace) {
     this.availableSpace = availableSpace;
   }

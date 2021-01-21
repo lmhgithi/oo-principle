@@ -66,7 +66,7 @@ import java.util.Optional;
      * <p>
 */
 public class ParkingManager extends AbstractParkingPerson{
-  private final List<AbstractParkingPerson> parkingBoys;
+    private final List<AbstractParkingPerson> parkingBoys;
 
   public ParkingManager(List<AbstractParkingPerson> parkingBoys, List<ParkingLot> parkingLots) {
     super(parkingLots);
@@ -86,6 +86,10 @@ public class ParkingManager extends AbstractParkingPerson{
     return responsibleParkingBoy
         .map(parkingBoy -> parkingBoy.pick(ticket))
         .orElse(super.pick(ticket));
+  }
+
+  public List<AbstractParkingPerson> getParkingBoys() {
+    return parkingBoys;
   }
 
   @Override
@@ -124,5 +128,19 @@ public class ParkingManager extends AbstractParkingPerson{
                 .isPresent())
         .findAny();
 
+  }
+
+  public int getAvailableSpaceOfAll() {
+    return super.getAvailableSpace() +
+        parkingBoys.stream()
+            .mapToInt(AbstractParkingPerson::getAvailableSpace)
+            .sum();
+  }
+
+  public int getTotalSpaceOfAll() {
+    return super.getTotalSpace() +
+        parkingBoys.stream()
+            .mapToInt(AbstractParkingPerson::getTotalSpace)
+            .sum();
   }
 }

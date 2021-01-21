@@ -44,4 +44,18 @@ public abstract class AbstractParkingPerson {
     return any.isPresent();
   }
 
+  public int getAvailableSpace() {
+    return parkingLots
+        .stream()
+        .mapToInt(ParkingLot::getAvailableSpace)
+        .sum();
+  }
+
+  public int getTotalSpace() {
+    return parkingLots
+        .stream()
+        .mapToInt(ParkingLot::getTotalSpace)
+        .sum();
+  }
+
 }
