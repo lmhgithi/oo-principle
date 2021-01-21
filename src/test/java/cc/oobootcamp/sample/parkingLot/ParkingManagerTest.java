@@ -152,6 +152,16 @@ class ParkingManagerTest {
     assertThat(ticket).isEqualTo(null);
   }
 
+  @Test
+  void should_pick_up_car_when_car_in_managers_parking_lot() {
+    Car carPark = new Car();
+    Ticket ticket = parkingManager.park(carPark);
+
+    Car carPickUp = parkingManager.pick(ticket);
+
+    assertThat(carPickUp).isEqualTo(carPark);
+  }
+
   private void givenParkOneBoyToFull() {
     for (int i = 0; i < spacePerParkingLot * 2; i++) {
       parkingManager.parkByParkingBoy(new Car());

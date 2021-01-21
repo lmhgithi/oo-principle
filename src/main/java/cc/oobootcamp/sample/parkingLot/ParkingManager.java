@@ -64,18 +64,6 @@ import java.util.Optional;
      * 取车
      * 取车成功，返回ticket
      * <p>
- * 给manager一张Ticket，Ticket对应的车在 boy 负责的停车场
-     * 取车
-     * boy取车成功，返回ticket
-     * <p>
- * 给manager一个错误的Ticket，
-     * 取车
-     * 提示 票据错误
-     * <p>
- * 给manager一张Ticket，Ticket是正确的
-     * 取两次车
-     * 第一次取车成功，第二次取车失败
-     * <p>
 */
 public class ParkingManager extends AbstractParkingPerson{
   private final List<AbstractParkingPerson> parkingBoys;
@@ -95,8 +83,9 @@ public class ParkingManager extends AbstractParkingPerson{
 
   public Car pick(Ticket ticket) {
     Optional<AbstractParkingPerson> responsibleParkingBoy = findResponsibleParkingBoy(ticket);
-    return responsibleParkingBoy.map(parkingBoy -> parkingBoy.pick(ticket))
-        .orElse(null);
+    return responsibleParkingBoy
+        .map(parkingBoy -> parkingBoy.pick(ticket))
+        .orElse(super.pick(ticket));
   }
 
   @Override
