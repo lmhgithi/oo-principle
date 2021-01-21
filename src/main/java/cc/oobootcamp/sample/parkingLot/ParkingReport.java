@@ -19,7 +19,7 @@ public class ParkingReport {
     return lines;
   }
 
-  static class ReportLine {
+  public static class ReportLine {
     int level;
     String role;
     int parkedSpace;

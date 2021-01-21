@@ -2,8 +2,8 @@ package cc.oobootcamp.sample.parkingLot;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import cc.oobootcamp.sample.parkingLot.util.NormalReportGenerator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +37,7 @@ class ParkingDirectorTest {
     parkingManager.getParkingBoys().get(0).getParkingLots().get(0).setAvailableSpace(9);
     parkingManager.getParkingBoys().get(0).getParkingLots().get(1).setAvailableSpace(8);
 
-    ParkingReport parkingReport = ParkingDirector.generateReport(parkingManager);
+    ParkingReport parkingReport = ParkingDirector.getParkingReport(parkingManager, new NormalReportGenerator());
 
     assertThat(parkingReport).isNotNull();
     assertThat(parkingReport.getLines().get(0).level).isEqualTo(parkingReportExpected.getLines().get(0).level);
